@@ -1,0 +1,6 @@
+{
+  "name": "ChronosSnap - Time-Travel Photo Booth",
+  "description": "Step into history with AI face insertion into iconic eras, vintage sepia filters, transformation video export, creator community feed, and real-time engagement dashboard.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
