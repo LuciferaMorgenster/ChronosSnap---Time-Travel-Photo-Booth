@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { CreatorProfile } from '../types';
 import { HISTORICAL_ERAS } from '../data/historicalEras';
+import { useI18n } from '../context/I18nContext';
 
 interface OnboardingModalProps {
   isOpen: boolean;
@@ -27,6 +28,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
   profile,
   onSaveProfile,
 }) => {
+  const { t } = useI18n();
   const [step, setStep] = useState(1);
   const [name, setName] = useState(profile.name);
   const [handle, setHandle] = useState(profile.handle);
@@ -98,17 +100,17 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
             <div className="space-y-4 animate-in fade-in">
               <div className="text-center space-y-1 mb-6">
                 <h3 className="font-serif text-lg font-bold dark:text-stone-100 text-slate-800">
-                  Welcome, Temporal Creator
+                  {t('welcomeCreator')}
                 </h3>
                 <p className="text-xs text-stone-400 max-w-sm mx-auto">
-                  Set up your time-traveler identity. Your creations will be stamped with your unique creator handle.
+                  {t('welcomeCreatorDesc')}
                 </p>
               </div>
 
               {/* Avatar Selector */}
               <div>
                 <label className="block text-xs font-mono uppercase text-stone-400 mb-2">
-                  Select Creator Avatar
+                  {t('selectAvatar')}
                 </label>
                 <div className="flex items-center justify-center gap-3">
                   {AVATAR_PRESETS.map((preset, idx) => (
@@ -141,7 +143,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
               <div className="grid grid-cols-2 gap-3 pt-2">
                 <div>
                   <label className="block text-xs font-mono uppercase text-stone-400 mb-1">
-                    Display Name
+                    {t('displayName')}
                   </label>
                   <input
                     type="text"
@@ -153,7 +155,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                 </div>
                 <div>
                   <label className="block text-xs font-mono uppercase text-stone-400 mb-1">
-                    Creator Handle
+                    {t('creatorHandle')}
                   </label>
                   <input
                     type="text"
@@ -167,7 +169,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
               <div>
                 <label className="block text-xs font-mono uppercase text-stone-400 mb-1">
-                  Creative Bio
+                  {t('creativeBio')}
                 </label>
                 <input
                   type="text"
@@ -184,10 +186,10 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
             <div className="space-y-4 animate-in fade-in">
               <div className="text-center space-y-1 mb-4">
                 <h3 className="font-serif text-lg font-bold dark:text-stone-100 text-slate-800">
-                  Camera & Pose Alignment Guide
+                  {t('cameraGuideTitle')}
                 </h3>
                 <p className="text-xs text-stone-400 max-w-sm mx-auto">
-                  For museum-grade historical realism, follow these 3 quick tips when taking your photo.
+                  {t('cameraGuideDesc')}
                 </p>
               </div>
 
@@ -197,10 +199,10 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                     <Camera className="w-5 h-5" />
                   </div>
                   <h4 className="text-xs font-bold dark:text-stone-200 text-slate-700">
-                    Frontal Eye Level
+                    {t('frontalEyeLevel')}
                   </h4>
                   <p className="text-[11px] text-stone-400">
-                    Align your eyes with the booth oval guide for natural facial geometry.
+                    {t('frontalDesc')}
                   </p>
                 </div>
 
@@ -209,10 +211,10 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                     <Zap className="w-5 h-5" />
                   </div>
                   <h4 className="text-xs font-bold dark:text-stone-200 text-slate-700">
-                    Even Lighting
+                    {t('evenLighting')}
                   </h4>
                   <p className="text-[11px] text-stone-400">
-                    Soft natural light or warm frontal light ensures authentic chiaroscuro blending.
+                    {t('lightingDesc')}
                   </p>
                 </div>
 
@@ -221,10 +223,10 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                     <Sparkles className="w-5 h-5" />
                   </div>
                   <h4 className="text-xs font-bold dark:text-stone-200 text-slate-700">
-                    Gemini 4 Argon
+                    {t('geminiGuidance')}
                   </h4>
                   <p className="text-[11px] text-stone-400">
-                    Our AI automatically analyzes your facial expression to recommend matching eras!
+                    {t('geminiDesc')}
                   </p>
                 </div>
               </div>
@@ -232,7 +234,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
               <div className="p-3 rounded-xl border border-amber-500/30 bg-amber-500/5 flex items-center gap-3">
                 <Shield className="w-5 h-5 text-amber-400 shrink-0" />
                 <p className="text-xs text-amber-300">
-                  <strong className="font-semibold">Privacy First:</strong> Photos are processed securely and locally. You maintain full ownership of all creations.
+                  <strong className="font-semibold">{t('privacyTitle')}</strong> {t('privacyDesc')}
                 </p>
               </div>
             </div>
@@ -242,10 +244,10 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
             <div className="space-y-4 animate-in fade-in">
               <div className="text-center space-y-1 mb-4">
                 <h3 className="font-serif text-lg font-bold dark:text-stone-100 text-slate-800">
-                  Choose Your Destination Era
+                  {t('chooseDestEra')}
                 </h3>
                 <p className="text-xs text-stone-400 max-w-sm mx-auto">
-                  Where would you like to travel first? Powered by gemini-nano-banana-2.1 with custom prompt editing.
+                  {t('chooseDestDesc')}
                 </p>
               </div>
 
@@ -292,7 +294,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                 onClick={() => setStep(step - 1)}
                 className="px-4 py-2 rounded-xl text-xs font-semibold dark:text-stone-400 dark:hover:text-stone-200 text-slate-600 hover:text-slate-900"
               >
-                Back
+                {t('back')}
               </button>
             ) : (
               <div />
@@ -304,7 +306,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                 onClick={() => setStep(step + 1)}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-amber-500 text-stone-950 hover:bg-amber-400 shadow-md shadow-amber-500/20"
               >
-                Continue <ArrowRight className="w-4 h-4" />
+                {t('continue')} <ArrowRight className="w-4 h-4" />
               </button>
             ) : (
               <button
@@ -312,7 +314,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                 onClick={handleFinish}
                 className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-500 to-yellow-400 text-stone-950 hover:brightness-110 shadow-lg shadow-amber-500/30"
               >
-                <Sparkles className="w-4 h-4" /> Start Time-Traveling
+                <Sparkles className="w-4 h-4" /> {t('startTimeTraveling')}
               </button>
             )}
           </div>

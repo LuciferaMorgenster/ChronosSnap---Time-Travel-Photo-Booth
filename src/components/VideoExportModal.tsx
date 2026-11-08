@@ -13,6 +13,7 @@ import {
 import confetti from 'canvas-confetti';
 import { generateTransformationVideo } from '../utils/videoRecorder';
 import { playTimeWarpSound } from '../utils/audio';
+import { useI18n } from '../context/I18nContext';
 
 interface VideoExportModalProps {
   isOpen: boolean;
@@ -33,6 +34,7 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
   eraYear,
   creatorHandle,
 }) => {
+  const { t } = useI18n();
   const [isRendering, setIsRendering] = useState(false);
   const [progress, setProgress] = useState(0);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
@@ -116,10 +118,10 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
             </div>
             <div>
               <h3 className="font-serif font-bold text-sm dark:text-stone-100 text-slate-800">
-                Transformation Video Studio
+                {t('videoStudioTitle')}
               </h3>
               <p className="text-[11px] text-stone-400">
-                Viral 9:16 Time-Warp Sequence for TikTok & Reels
+                {t('videoStudioSubtitle')}
               </p>
             </div>
           </div>
@@ -145,7 +147,7 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
 
               <div className="space-y-2 max-w-xs">
                 <h4 className="font-serif text-base font-bold dark:text-stone-200 text-slate-800">
-                  Rendering Quantum Warp...
+                  {t('renderingWarp')}
                 </h4>
                 <p className="text-xs text-stone-400">
                   {progress < 30
@@ -180,10 +182,10 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
 
               <div className="text-center space-y-1">
                 <div className="flex items-center justify-center gap-1.5 text-emerald-400 text-xs font-semibold">
-                  <CheckCircle2 className="w-4 h-4" /> Ready for Viral Sharing!
+                  <CheckCircle2 className="w-4 h-4" /> {t('videoReady')}
                 </div>
                 <p className="text-[11px] text-stone-400">
-                  Formatted for Instagram Reels, TikTok, YouTube Shorts, and WhatsApp Status.
+                  {t('videoOptimizedDesc')}
                 </p>
               </div>
 
@@ -194,7 +196,7 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
                   onClick={handleDownload}
                   className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs sm:text-sm hover:brightness-110 shadow-lg shadow-purple-600/25 transition-all"
                 >
-                  <Download className="w-4 h-4" /> Download Video (.webm)
+                  <Download className="w-4 h-4" /> {t('downloadVideo')}
                 </button>
 
                 <button
@@ -202,7 +204,7 @@ export const VideoExportModal: React.FC<VideoExportModalProps> = ({
                   onClick={handleShareVideo}
                   className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border dark:border-stone-700 dark:bg-stone-800 dark:text-stone-200 dark:hover:bg-stone-700 bg-slate-100 border-slate-300 text-slate-700 hover:bg-slate-200 text-xs sm:text-sm font-semibold transition-colors"
                 >
-                  <Share2 className="w-4 h-4 text-amber-400" /> Share
+                  <Share2 className="w-4 h-4 text-amber-400" /> {t('shareVideo')}
                 </button>
 
                 <button

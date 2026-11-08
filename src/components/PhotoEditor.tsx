@@ -19,6 +19,7 @@ import {
 import confetti from 'canvas-confetti';
 import { FilterSettings, HistoricalEra, Project, VintageFilterType } from '../types';
 import { applyFiltersToCanvas } from '../utils/canvasFilters';
+import { useI18n } from '../context/I18nContext';
 
 interface PhotoEditorProps {
   project: Project;
@@ -39,6 +40,7 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
   onCustomPromptSubmit,
   isEditingPrompt,
 }) => {
+  const { t } = useI18n();
   const [viewMode, setViewMode] = useState<'split' | 'side' | 'transformed'>('split');
   const [sliderPos, setSliderPos] = useState(50); // 0 to 100%
   const [customPromptText, setCustomPromptText] = useState(project.customPrompt || '');
@@ -133,7 +135,7 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
       <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl border dark:border-stone-800 dark:bg-stone-900/60 bg-white border-slate-200">
         <div className="flex items-center gap-2">
           <span className="text-xs font-mono uppercase tracking-wider text-stone-400">
-            View Mode:
+            {t('viewMode')}
           </span>
           <div className="flex items-center p-0.5 rounded-lg border dark:border-stone-800 dark:bg-stone-950 bg-slate-100 border-slate-200">
             <button
@@ -144,7 +146,7 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
                   : 'text-stone-400 hover:text-stone-200'
               }`}
             >
-              <Split className="w-3.5 h-3.5" /> Before / After Slider
+              <Split className="w-3.5 h-3.5" /> {t('beforeAfterSlider')}
             </button>
             <button
               onClick={() => setViewMode('side')}
@@ -154,7 +156,7 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
                   : 'text-stone-400 hover:text-stone-200'
               }`}
             >
-              <Layers className="w-3.5 h-3.5" /> Side by Side
+              <Layers className="w-3.5 h-3.5" /> {t('sideBySide')}
             </button>
             <button
               onClick={() => setViewMode('transformed')}
@@ -164,7 +166,7 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
                   : 'text-stone-400 hover:text-stone-200'
               }`}
             >
-              <Eye className="w-3.5 h-3.5" /> Transformed Only
+              <Eye className="w-3.5 h-3.5" /> {t('transformedOnly')}
             </button>
           </div>
         </div>
@@ -172,7 +174,7 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
         {/* Resolution selector (1K, 2K, 4K for gemini-nano-banana-2.1) */}
         <div className="flex items-center gap-2">
           <span className="text-xs font-mono uppercase tracking-wider text-stone-400">
-            Resolution:
+            {t('resolution')}
           </span>
           <div className="flex items-center p-0.5 rounded-lg border dark:border-stone-800 dark:bg-stone-950 bg-slate-100 border-slate-200">
             {(['1K', '2K', '4K'] as const).map((res) => (
@@ -312,7 +314,7 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-stone-950 font-bold text-xs sm:text-sm hover:brightness-110 shadow-lg shadow-amber-500/25 active:scale-95 transition-all"
           >
             <Download className="w-4 h-4" />
-            {isDownloading ? 'Rendering High-Res...' : `Download ${resolution} Image`}
+            {isDownloading ? t('renderingHighRes') : `${t('downloadImage')} (${resolution})`}
           </button>
 
           <button
@@ -321,7 +323,7 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs sm:text-sm hover:brightness-110 shadow-lg shadow-purple-600/25 active:scale-95 transition-all"
           >
             <Film className="w-4 h-4" />
-            Export Transformation Video
+            {t('exportVideo')}
           </button>
 
           <button
@@ -330,7 +332,7 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl border dark:border-stone-700 dark:bg-stone-800 dark:text-stone-200 dark:hover:bg-stone-700 bg-slate-100 border-slate-300 text-slate-800 hover:bg-slate-200 text-xs sm:text-sm font-semibold transition-colors"
           >
             <Share2 className="w-4 h-4 text-amber-400" />
-            Share to Social
+            {t('shareToSocial')}
           </button>
         </div>
       </div>
@@ -344,10 +346,10 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
             </div>
             <div>
               <h4 className="font-serif font-bold text-sm dark:text-stone-100 text-slate-800">
-                Text Prompt Alchemy (gemini-nano-banana-2.1)
+                {t('promptAlchemyTitle')}
               </h4>
               <p className="text-[11px] text-stone-400">
-                Add, edit, or adjust costume details, lighting, or background elements with text prompts.
+                {t('promptAlchemySubtitle')}
               </p>
             </div>
           </div>
@@ -362,7 +364,7 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
             type="text"
             value={customPromptText}
             onChange={(e) => setCustomPromptText(e.target.value)}
-            placeholder="e.g. Add a gilded laurel wreath, candlelight glow, and Rembrandt oil craquelure..."
+            placeholder={t('promptPlaceholder')}
             className="flex-1 px-4 py-2.5 rounded-xl text-xs sm:text-sm border dark:bg-stone-950 dark:border-stone-700 dark:text-stone-100 bg-slate-50 border-slate-300 text-slate-800 focus:outline-none focus:border-amber-500"
           />
           <button
@@ -372,14 +374,14 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
             className="px-5 py-2.5 rounded-xl bg-amber-500 text-stone-950 font-bold text-xs sm:text-sm hover:bg-amber-400 flex items-center gap-1.5 shadow-md shadow-amber-500/20 disabled:opacity-50 transition-all shrink-0"
           >
             <Send className={`w-3.5 h-3.5 ${isEditingPrompt ? 'animate-spin' : ''}`} />
-            {isEditingPrompt ? 'Synthesizing...' : 'Re-Synthesize'}
+            {isEditingPrompt ? t('synthesizing') : t('reSynthesize')}
           </button>
         </div>
 
         {/* Quick prompt inspiration tags */}
         <div className="space-y-1.5">
           <span className="text-[10px] font-mono uppercase text-stone-400">
-            Quick Creative Additions:
+            {t('quickAdditions')}
           </span>
           <div className="flex flex-wrap gap-1.5">
             {PROMPT_INSPIRATIONS.map((idea, idx) => (
@@ -405,10 +407,10 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
             </div>
             <div>
               <h4 className="font-serif font-bold text-sm dark:text-stone-100 text-slate-800">
-                Vintage & Sepia Darkroom Filters
+                {t('darkroomFiltersTitle')}
               </h4>
               <p className="text-[11px] text-stone-400">
-                Fine-tune authentic 19th and 20th century photographic aesthetics, grain, and borders.
+                {t('darkroomFiltersSubtitle')}
               </p>
             </div>
           </div>
@@ -443,7 +445,7 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
           {/* Sepia Intensity Slider */}
           <div className="space-y-1.5 p-3 rounded-xl border dark:border-stone-800/80 dark:bg-stone-950/40 bg-slate-50 border-slate-200">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-medium text-stone-300">Sepia Warmth</span>
+              <span className="font-medium text-stone-300">{t('sepiaWarmth')}</span>
               <span className="font-mono text-amber-400">{filterSettings.sepiaIntensity}%</span>
             </div>
             <input
@@ -459,7 +461,7 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
           {/* Film Grain Slider */}
           <div className="space-y-1.5 p-3 rounded-xl border dark:border-stone-800/80 dark:bg-stone-950/40 bg-slate-50 border-slate-200">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-medium text-stone-300">Film Grain & Noise</span>
+              <span className="font-medium text-stone-300">{t('filmGrain')}</span>
               <span className="font-mono text-amber-400">{filterSettings.grain}%</span>
             </div>
             <input
@@ -475,7 +477,7 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
           {/* Vignette Slider */}
           <div className="space-y-1.5 p-3 rounded-xl border dark:border-stone-800/80 dark:bg-stone-950/40 bg-slate-50 border-slate-200">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-medium text-stone-300">Edge Vignette</span>
+              <span className="font-medium text-stone-300">{t('edgeVignette')}</span>
               <span className="font-mono text-amber-400">{filterSettings.vignette}%</span>
             </div>
             <input
@@ -491,7 +493,7 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
           {/* Contrast Slider */}
           <div className="space-y-1.5 p-3 rounded-xl border dark:border-stone-800/80 dark:bg-stone-950/40 bg-slate-50 border-slate-200">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-medium text-stone-300">Contrast</span>
+              <span className="font-medium text-stone-300">{t('contrast')}</span>
               <span className="font-mono text-amber-400">{filterSettings.contrast}</span>
             </div>
             <input
@@ -508,14 +510,14 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
         {/* Border Style and Timestamp Caption */}
         <div className="flex flex-wrap items-center justify-between gap-4 pt-2 border-t dark:border-stone-800 border-slate-200">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono uppercase text-stone-400">Frame Border:</span>
+            <span className="text-xs font-mono uppercase text-stone-400">{t('frameBorder')}</span>
             <div className="flex items-center gap-1">
               {(
                 [
-                  { id: 'none', label: 'None' },
-                  { id: 'cabinet', label: 'Cabinet Card' },
-                  { id: 'polaroid', label: 'Instant Print' },
-                  { id: 'gilded', label: 'Museum Gold' },
+                  { id: 'none', label: t('none') },
+                  { id: 'cabinet', label: t('cabinetCard') },
+                  { id: 'polaroid', label: t('instantPrint') },
+                  { id: 'gilded', label: t('museumGold') },
                 ] as const
               ).map((border) => (
                 <button
@@ -543,7 +545,7 @@ export const PhotoEditor: React.FC<PhotoEditorProps> = ({
                 onChange={(e) => handleUpdateFilter({ showTimestamp: e.target.checked })}
                 className="rounded accent-amber-500"
               />
-              Stamp Historical Year ({activeEra.year})
+              {t('stampYear')} ({activeEra.year})
             </label>
           </div>
         </div>

@@ -14,6 +14,7 @@ import {
 import { playCameraShutterSound } from '../utils/audio';
 import { SAMPLE_PORTRAITS, SamplePortrait } from '../data/samplePortraits';
 import { FaceAnalysisResult } from '../types';
+import { useI18n } from '../context/I18nContext';
 
 interface CameraBoothProps {
   currentPhoto: string | null;
@@ -32,6 +33,7 @@ export const CameraBooth: React.FC<CameraBoothProps> = ({
   analysisResult,
   onOpenAnalysisModal,
 }) => {
+  const { t } = useI18n();
   const [cameraActive, setCameraActive] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [flash, setFlash] = useState(false);
@@ -42,7 +44,6 @@ export const CameraBooth: React.FC<CameraBoothProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
-  // Stop camera when unmounting
   useEffect(() => {
     return () => {
       stopCamera();
@@ -72,7 +73,7 @@ export const CameraBooth: React.FC<CameraBoothProps> = ({
       setCameraActive(true);
     } catch (err: any) {
       console.warn('Camera access denied or unavailable:', err);
-      setCameraError('Camera access unavailable or blocked. You can upload a photo or pick a sample portrait below.');
+      setCameraError(t('cameraUnavailable'));
       setCameraActive(false);
     }
   };
@@ -114,7 +115,6 @@ export const CameraBooth: React.FC<CameraBoothProps> = ({
     canvas.height = video.videoHeight || 800;
     const ctx = canvas.getContext('2d')!;
 
-    // Mirror if user facing
     if (facingMode === 'user') {
       ctx.translate(canvas.width, 0);
       ctx.scale(-1, 1);
@@ -180,11 +180,11 @@ export const CameraBooth: React.FC<CameraBoothProps> = ({
                 <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
                   <div className="w-48 h-60 sm:w-56 sm:h-72 border-2 border-dashed border-amber-400/60 rounded-[50%] flex flex-col items-center justify-between py-6">
                     <span className="text-[10px] font-mono tracking-widest text-amber-300 bg-stone-900/80 px-2 py-0.5 rounded-full uppercase">
-                      Align Face Here
+                      {t('alignFaceHere')}
                     </span>
                     <div className="w-8 h-0.5 bg-amber-400/40 rounded-full" />
                     <span className="text-[9px] font-mono text-amber-300/80 bg-stone-900/80 px-2 py-0.5 rounded-full">
-                      Chin Level
+                      {t('chinLevel')}
                     </span>
                   </div>
                 </div>
@@ -206,13 +206,13 @@ export const CameraBooth: React.FC<CameraBoothProps> = ({
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent flex items-end p-4">
                   <div className="flex items-center justify-between w-full">
                     <span className="text-xs font-mono text-amber-400 flex items-center gap-1.5 bg-stone-900/80 px-2.5 py-1 rounded-lg border border-amber-400/30">
-                      <Check className="w-3.5 h-3.5 text-emerald-400" /> Subject Calibrated
+                      <Check className="w-3.5 h-3.5 text-emerald-400" /> {t('subjectCalibrated')}
                     </span>
                     <button
                       onClick={startCamera}
                       className="text-xs font-semibold px-3 py-1 rounded-lg bg-stone-900/90 text-stone-200 border border-stone-700 hover:border-amber-400 transition-colors"
                     >
-                      Retake
+                      {t('retake')}
                     </button>
                   </div>
                 </div>
@@ -225,10 +225,10 @@ export const CameraBooth: React.FC<CameraBoothProps> = ({
                 </div>
                 <div>
                   <h4 className="font-serif text-base font-bold dark:text-stone-200 text-stone-100">
-                    Temporal Capture Viewport
+                    {t('temporalViewport')}
                   </h4>
                   <p className="text-xs text-stone-400 max-w-xs mt-1">
-                    Start your camera, upload an existing photo, or pick a sample voyager below.
+                    {t('temporalViewportDesc')}
                   </p>
                 </div>
               </div>
@@ -246,7 +246,7 @@ export const CameraBooth: React.FC<CameraBoothProps> = ({
                   className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-stone-950 font-bold text-sm hover:brightness-110 shadow-lg shadow-amber-500/30 active:scale-95 transition-all"
                 >
                   <Camera className="w-4 h-4" />
-                  {countdown !== null ? `Snapping in ${countdown}...` : 'Capture Photo (3s)'}
+                  {countdown !== null ? `${t('snappingIn')} ${countdown}...` : t('capturePhoto')}
                 </button>
 
                 <button
@@ -265,7 +265,7 @@ export const CameraBooth: React.FC<CameraBoothProps> = ({
                   onClick={stopCamera}
                   className="px-3 py-3 rounded-xl border dark:border-stone-700 dark:bg-stone-800 dark:text-stone-400 bg-slate-100 border-slate-300 text-slate-600 hover:text-stone-200 text-xs font-semibold"
                 >
-                  Cancel
+                  {t('cancel')}
                 </button>
               </>
             ) : (
@@ -276,7 +276,7 @@ export const CameraBooth: React.FC<CameraBoothProps> = ({
                   className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-amber-500 text-stone-950 font-bold text-xs sm:text-sm hover:bg-amber-400 shadow-md shadow-amber-500/20 active:scale-95 transition-all"
                 >
                   <Camera className="w-4 h-4" />
-                  Launch Photo Booth
+                  {t('launchPhotoBooth')}
                 </button>
 
                 <button
@@ -285,7 +285,7 @@ export const CameraBooth: React.FC<CameraBoothProps> = ({
                   className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold transition-colors dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300 dark:hover:bg-stone-700 bg-slate-100 border-slate-300 text-slate-700 hover:bg-slate-200"
                 >
                   <Upload className="w-4 h-4" />
-                  Upload
+                  {t('upload')}
                 </button>
                 <input
                   ref={fileInputRef}
@@ -316,17 +316,17 @@ export const CameraBooth: React.FC<CameraBoothProps> = ({
                 </div>
                 <div>
                   <h4 className="text-xs font-bold font-mono tracking-wide dark:text-stone-200 text-slate-800 uppercase">
-                    Gemini 4 Argon Vision
+                    {t('geminiVisionTitle')}
                   </h4>
                   <p className="text-[10px] text-stone-400">
-                    Facial Geometry & Era Archetype Matcher
+                    {t('geminiVisionSubtitle')}
                   </p>
                 </div>
               </div>
 
               {analysisResult && (
                 <span className="text-[10px] font-mono font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">
-                  {analysisResult.eraCompatibilityScore}% Match
+                  {analysisResult.eraCompatibilityScore}% {t('matchScore')}
                 </span>
               )}
             </div>
@@ -336,14 +336,14 @@ export const CameraBooth: React.FC<CameraBoothProps> = ({
                 {analysisResult ? (
                   <div className="space-y-2 text-xs">
                     <div className="p-2.5 rounded-lg dark:bg-stone-900/90 bg-white border dark:border-stone-800 border-slate-200">
-                      <p className="text-[11px] text-stone-400">Aesthetic Archetype:</p>
+                      <p className="text-[11px] text-stone-400">{t('aestheticArchetype')}</p>
                       <p className="font-semibold text-amber-400 font-serif">
                         {analysisResult.aestheticArchetype}
                       </p>
                     </div>
 
                     <div className="p-2.5 rounded-lg dark:bg-stone-900/90 bg-white border dark:border-stone-800 border-slate-200">
-                      <p className="text-[11px] text-stone-400">Top Recommended Eras:</p>
+                      <p className="text-[11px] text-stone-400">{t('topRecommendedEras')}</p>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {analysisResult.recommendedEras.map((era, i) => (
                           <span
@@ -361,13 +361,13 @@ export const CameraBooth: React.FC<CameraBoothProps> = ({
                       onClick={onOpenAnalysisModal}
                       className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold text-amber-500 dark:hover:bg-amber-500/10 hover:bg-amber-50 transition-colors"
                     >
-                      <Eye className="w-3.5 h-3.5" /> View Full Facial Report & Advice
+                      <Eye className="w-3.5 h-3.5" /> {t('viewFullReport')}
                     </button>
                   </div>
                 ) : (
                   <div className="space-y-2">
                     <p className="text-xs text-stone-400">
-                      Analyze facial structure, expression, and period compatibility using Google Gemini 4 Argon.
+                      {t('analysisPrompt')}
                     </p>
                     <button
                       type="button"
@@ -376,14 +376,14 @@ export const CameraBooth: React.FC<CameraBoothProps> = ({
                       className="w-full flex items-center justify-center gap-2 py-2 rounded-xl border border-amber-500/40 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 text-xs font-bold transition-all disabled:opacity-50"
                     >
                       <Sparkles className={`w-3.5 h-3.5 ${isAnalyzing ? 'animate-spin' : ''}`} />
-                      {isAnalyzing ? 'Analyzing Face with Gemini 4 Argon...' : 'Analyze Face with Gemini 4 Argon'}
+                      {isAnalyzing ? t('analyzingFace') : t('analyzeFaceBtn')}
                     </button>
                   </div>
                 )}
               </div>
             ) : (
               <p className="text-xs text-stone-400">
-                Take or choose a photo to unlock historical styling advice and era compatibility scoring.
+                {t('analysisPrompt')}
               </p>
             )}
           </div>
@@ -392,9 +392,9 @@ export const CameraBooth: React.FC<CameraBoothProps> = ({
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400">
-                Or Try Sample Portraits
+                {t('orTrySample')}
               </span>
-              <span className="text-[10px] text-stone-500">1-Click Test</span>
+              <span className="text-[10px] text-stone-500">{t('oneClickTest')}</span>
             </div>
 
             <div className="grid grid-cols-4 gap-2">

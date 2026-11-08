@@ -11,6 +11,7 @@ import { VideoExportModal } from './components/VideoExportModal';
 import { ShareModal } from './components/ShareModal';
 import { ProfileModal } from './components/ProfileModal';
 import { DonationModal } from './components/DonationModal';
+import { useI18n } from './context/I18nContext';
 import { HISTORICAL_ERAS } from './data/historicalEras';
 import { SAMPLE_PORTRAITS } from './data/samplePortraits';
 import {
@@ -34,6 +35,7 @@ import { synthesizeHistoricalFallback } from './utils/canvasFilters';
 import { playTimeWarpSound } from './utils/audio';
 
 export default function App() {
+  const { t } = useI18n();
   const [projects, setProjects] = useState<Project[]>(() => getInitialProjects());
   const [currentId, setCurrentId] = useState<string>(() => {
     const saved = getCurrentProjectId();
@@ -483,13 +485,13 @@ export default function App() {
       {/* Footer */}
       <footer className="border-t py-4 px-4 text-center text-xs dark:border-stone-900 border-slate-200 dark:text-stone-500 text-slate-400 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
         <p className="font-mono">
-          ChronosSnap v2.4 • Powered by Gemini 4 Argon & Gemini Nano Banana 2.1 • PWA & Offline Capable
+          {t('footerNote')}
         </p>
         <button
           onClick={() => setDonationModalOpen(true)}
           className="text-amber-500 hover:text-amber-400 font-semibold underline underline-offset-2 flex items-center gap-1 cursor-pointer"
         >
-          ❤️ Doneer / Ondersteun via PayPal
+          {t('footerDonate')}
         </button>
       </footer>
 

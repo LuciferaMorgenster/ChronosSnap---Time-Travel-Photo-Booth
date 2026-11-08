@@ -12,6 +12,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { CreatorProfile, HistoricalEra } from '../types';
+import { useI18n } from '../context/I18nContext';
 
 interface ProfileModalProps {
   isOpen: boolean;
@@ -32,6 +33,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
   onOpenOnboarding,
   onOpenDonation,
 }) => {
+  const { t } = useI18n();
   const [name, setName] = useState(profile.name);
   const [handle, setHandle] = useState(profile.handle);
   const [bio, setBio] = useState(profile.bio);
@@ -61,10 +63,10 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
             </div>
             <div>
               <h3 className="font-serif font-bold text-sm dark:text-stone-100 text-slate-800">
-                Creator Profile Settings
+                {t('profileSettingsTitle')}
               </h3>
               <p className="text-[11px] text-stone-400">
-                Manage your identity and synchronization
+                {t('profileSettingsSubtitle')}
               </p>
             </div>
           </div>
@@ -91,7 +93,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
               <p className="text-xs font-mono text-amber-500">{profile.handle}</p>
               <div className="flex items-center gap-1.5 mt-1 text-[11px] text-emerald-400 font-mono">
                 <Cloud className="w-3.5 h-3.5" />
-                <span>Cloud Sync Active</span>
+                <span>{t('cloudSyncActive')}</span>
               </div>
             </div>
           </div>
@@ -99,7 +101,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
           <div className="space-y-3 pt-2">
             <div>
               <label className="block text-xs font-mono uppercase text-stone-400 mb-1">
-                Display Name
+                {t('displayName')}
               </label>
               <input
                 type="text"
@@ -111,7 +113,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
 
             <div>
               <label className="block text-xs font-mono uppercase text-stone-400 mb-1">
-                Creator Handle
+                {t('creatorHandle')}
               </label>
               <input
                 type="text"
@@ -123,7 +125,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
 
             <div>
               <label className="block text-xs font-mono uppercase text-stone-400 mb-1">
-                Creative Bio
+                {t('creativeBio')}
               </label>
               <textarea
                 rows={2}
@@ -135,7 +137,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
 
             <div>
               <label className="block text-xs font-mono uppercase text-stone-400 mb-1">
-                Favorite Historical Era
+                {t('favoriteEraLabel')}
               </label>
               <select
                 value={favoriteEra}
@@ -161,7 +163,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
               className="w-full flex items-center justify-center gap-2 py-2 rounded-xl border border-rose-500/40 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-xs font-bold transition-all"
             >
               <Heart className="w-4 h-4 fill-rose-400" />
-              <span>Ondersteun ChronosSnap via PayPal</span>
+              <span>{t('supportViaPaypalProfile')}</span>
             </button>
 
             <button
@@ -172,7 +174,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
               }}
               className="w-full flex items-center justify-center gap-1.5 py-1.5 text-xs font-semibold text-stone-400 hover:text-amber-400 transition-colors"
             >
-              <HelpCircle className="w-3.5 h-3.5" /> Re-open Creator Onboarding Tour
+              <HelpCircle className="w-3.5 h-3.5" /> {t('reopenTour')}
             </button>
           </div>
 
@@ -182,14 +184,14 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({
               onClick={onClose}
               className="px-4 py-2 text-xs font-semibold text-stone-400 hover:text-stone-200"
             >
-              Cancel
+              {t('cancel')}
             </button>
             <button
               type="button"
               onClick={handleSave}
               className="px-5 py-2 rounded-xl text-xs font-bold bg-amber-500 text-stone-950 hover:bg-amber-400 shadow-md shadow-amber-500/20"
             >
-              Save Profile
+              {t('saveProfile')}
             </button>
           </div>
         </div>

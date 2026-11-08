@@ -10,6 +10,7 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { FaceAnalysisResult, HistoricalEra } from '../types';
+import { useI18n } from '../context/I18nContext';
 
 interface AnalysisModalProps {
   isOpen: boolean;
@@ -26,6 +27,8 @@ export const AnalysisModal: React.FC<AnalysisModalProps> = ({
   onSelectEra,
   eras,
 }) => {
+  const { t } = useI18n();
+
   if (!isOpen || !analysis) return null;
 
   // Find matching era object if possible
@@ -46,10 +49,10 @@ export const AnalysisModal: React.FC<AnalysisModalProps> = ({
             </div>
             <div>
               <h3 className="font-serif font-bold text-base dark:text-stone-100 text-slate-800">
-                Gemini 4 Argon Facial Analysis
+                {t('analysisModalTitle')}
               </h3>
               <p className="text-xs font-mono text-amber-500">
-                Multimodal Image Understanding Report
+                {t('analysisModalSubtitle')}
               </p>
             </div>
           </div>
@@ -67,13 +70,13 @@ export const AnalysisModal: React.FC<AnalysisModalProps> = ({
           <div className="p-4 rounded-xl border border-amber-500/30 bg-gradient-to-r from-amber-500/10 to-yellow-500/5 flex items-center justify-between">
             <div>
               <span className="text-[10px] font-mono uppercase tracking-wider text-amber-400 font-bold">
-                Temporal Archetype
+                {t('temporalArchetype')}
               </span>
               <h4 className="font-serif text-lg font-bold text-amber-200">
                 {analysis.aestheticArchetype}
               </h4>
               <p className="text-xs text-stone-300 mt-0.5">
-                Expression: {analysis.facialExpression}
+                {t('expression')}: {analysis.facialExpression}
               </p>
             </div>
             <div className="text-right">
@@ -81,7 +84,7 @@ export const AnalysisModal: React.FC<AnalysisModalProps> = ({
                 <span className="text-xs font-mono font-black text-amber-400 leading-none">
                   {analysis.eraCompatibilityScore}%
                 </span>
-                <span className="text-[8px] font-mono text-stone-400 uppercase">Match</span>
+                <span className="text-[8px] font-mono text-stone-400 uppercase">{t('matchScore')}</span>
               </div>
             </div>
           </div>
@@ -90,7 +93,7 @@ export const AnalysisModal: React.FC<AnalysisModalProps> = ({
           <div className="p-3.5 rounded-xl border dark:border-stone-800 dark:bg-stone-950/50 bg-slate-50 border-slate-200 space-y-1">
             <div className="flex items-center gap-2 text-xs font-bold dark:text-stone-300 text-slate-700">
               <Lightbulb className="w-4 h-4 text-amber-400" />
-              <span>Lighting & Geometry Evaluation</span>
+              <span>{t('lightingEvaluation')}</span>
             </div>
             <p className="text-xs text-stone-400 pl-6">
               {analysis.lightingConditions}
@@ -101,7 +104,7 @@ export const AnalysisModal: React.FC<AnalysisModalProps> = ({
           <div className="space-y-2">
             <label className="text-xs font-mono uppercase tracking-wider text-stone-400 flex items-center gap-1.5">
               <Compass className="w-3.5 h-3.5 text-amber-400" />
-              Top Recommended Epochs
+              {t('topEpochs')}
             </label>
             <div className="grid grid-cols-1 gap-2">
               {analysis.recommendedEras.map((eraString, idx) => (
@@ -118,7 +121,7 @@ export const AnalysisModal: React.FC<AnalysisModalProps> = ({
                     </span>
                   </div>
                   <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md">
-                    Optimal
+                    {t('optimal')}
                   </span>
                 </div>
               ))}
@@ -129,7 +132,7 @@ export const AnalysisModal: React.FC<AnalysisModalProps> = ({
           <div className="p-3.5 rounded-xl border dark:border-stone-800 dark:bg-stone-950/50 bg-slate-50 border-slate-200 space-y-1">
             <div className="flex items-center gap-2 text-xs font-bold dark:text-stone-300 text-slate-700">
               <Award className="w-4 h-4 text-amber-400" />
-              <span>Period Costume & Aesthetics Advice</span>
+              <span>{t('costumeAdvice')}</span>
             </div>
             <p className="text-xs text-stone-300 pl-6 leading-relaxed">
               {analysis.historicalStylingAdvice}
@@ -139,7 +142,7 @@ export const AnalysisModal: React.FC<AnalysisModalProps> = ({
           {/* Suggested Accessories */}
           <div className="space-y-2">
             <label className="text-xs font-mono uppercase tracking-wider text-stone-400">
-              Suggested Period Accessories
+              {t('suggestedAccessories')}
             </label>
             <div className="flex flex-wrap gap-1.5">
               {analysis.suggestedAccessories.map((acc, i) => (
@@ -160,7 +163,7 @@ export const AnalysisModal: React.FC<AnalysisModalProps> = ({
             onClick={onClose}
             className="px-4 py-2 text-xs font-semibold dark:text-stone-400 dark:hover:text-stone-200 text-slate-600 hover:text-slate-900"
           >
-            Close
+            {t('close')}
           </button>
           <button
             onClick={() => {
@@ -169,7 +172,7 @@ export const AnalysisModal: React.FC<AnalysisModalProps> = ({
             }}
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-500 to-yellow-400 text-stone-950 hover:brightness-110 shadow-md shadow-amber-500/25"
           >
-            Travel to {matchingEra.name} <ArrowRight className="w-4 h-4" />
+            {t('travelTo')} {matchingEra.name} <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>

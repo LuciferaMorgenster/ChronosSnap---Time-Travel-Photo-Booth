@@ -10,6 +10,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { HistoricalCategory, HistoricalEra } from '../types';
+import { useI18n } from '../context/I18nContext';
 
 interface EraSelectorProps {
   eras: HistoricalEra[];
@@ -28,15 +29,16 @@ export const EraSelector: React.FC<EraSelectorProps> = ({
   isGenerating,
   recommendedEras = [],
 }) => {
+  const { t } = useI18n();
   const [selectedCategory, setSelectedCategory] = useState<HistoricalCategory | 'all'>('all');
 
   const categories: { id: HistoricalCategory | 'all'; label: string }[] = [
-    { id: 'all', label: 'All Epochs' },
-    { id: 'ancient', label: 'Ancient Civilizations' },
-    { id: 'renaissance', label: 'Classical & Renaissance' },
-    { id: 'steampunk', label: 'Victorian & Frontier' },
-    { id: 'vintage20th', label: '20th Century Nostalgia' },
-    { id: 'futuristic', label: 'Retro-Futurism' },
+    { id: 'all', label: t('allEpochs') },
+    { id: 'ancient', label: t('ancientCivs') },
+    { id: 'renaissance', label: t('renaissanceClassics') },
+    { id: 'steampunk', label: t('steampunkIndustrial') },
+    { id: 'vintage20th', label: t('vintageNostalgia') },
+    { id: 'futuristic', label: t('retroFuturism') },
   ];
 
   const filteredEras = eras.filter((era) =>
@@ -91,7 +93,7 @@ export const EraSelector: React.FC<EraSelectorProps> = ({
                 <div className="flex items-center gap-1">
                   {isRecommended && (
                     <span className="text-[9px] font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full flex items-center gap-1">
-                      <Sparkles className="w-2.5 h-2.5" /> AI Recommended
+                      <Sparkles className="w-2.5 h-2.5" /> {t('aiRecommended')}
                     </span>
                   )}
                   <span className="text-[10px] px-2 py-0.5 rounded-full dark:bg-stone-800 dark:text-stone-300 bg-slate-100 text-slate-600 font-medium">
@@ -126,7 +128,7 @@ export const EraSelector: React.FC<EraSelectorProps> = ({
                     isSelected ? 'text-amber-400' : 'text-stone-500'
                   }`}
                 >
-                  {isSelected ? '✓ Selected' : 'Choose'}
+                  {isSelected ? '✓' : '→'}
                 </span>
               </div>
             </div>
@@ -146,7 +148,7 @@ export const EraSelector: React.FC<EraSelectorProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <h4 className="font-serif font-black text-base text-amber-200">
-                Ready for {activeEra.name} ({activeEra.year})
+                {t('readyFor')} {activeEra.name} ({activeEra.year})
               </h4>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300">
                 gemini-nano-banana-2.1
@@ -165,7 +167,7 @@ export const EraSelector: React.FC<EraSelectorProps> = ({
           className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-stone-950 font-black text-sm hover:brightness-110 shadow-lg shadow-amber-500/30 flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-50"
         >
           <Sparkles className={`w-4 h-4 ${isGenerating ? 'animate-spin' : ''}`} />
-          {isGenerating ? 'Initiating Temporal Portal...' : 'Time Travel Now'}
+          {isGenerating ? t('initiatingPortal') : t('timeTravelNow')}
           {!isGenerating && <ArrowRight className="w-4 h-4" />}
         </button>
       </div>

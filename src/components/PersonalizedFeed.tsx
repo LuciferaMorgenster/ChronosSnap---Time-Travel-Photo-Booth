@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { CommunityPost, HistoricalCategory, HistoricalEra } from '../types';
 import { INITIAL_COMMUNITY_FEED } from '../data/communityFeed';
+import { useI18n } from '../context/I18nContext';
 
 interface PersonalizedFeedProps {
   eras: HistoricalEra[];
@@ -23,16 +24,17 @@ export const PersonalizedFeed: React.FC<PersonalizedFeedProps> = ({
   eras,
   onRemixPost,
 }) => {
+  const { t } = useI18n();
   const [posts, setPosts] = useState<CommunityPost[]>(INITIAL_COMMUNITY_FEED);
   const [selectedCategory, setSelectedCategory] = useState<HistoricalCategory | 'all'>('all');
   const [showingOriginalMap, setShowingOriginalMap] = useState<Record<string, boolean>>({});
 
   const categories: { id: HistoricalCategory | 'all'; label: string }[] = [
-    { id: 'all', label: 'All Community Styles' },
-    { id: 'renaissance', label: 'Renaissance Masterpieces' },
-    { id: 'steampunk', label: 'Steampunk & Industrial' },
-    { id: 'ancient', label: 'Ancient Empires' },
-    { id: 'vintage20th', label: '20th Century Nostalgia' },
+    { id: 'all', label: t('allEpochs') },
+    { id: 'renaissance', label: t('renaissanceClassics') },
+    { id: 'steampunk', label: t('steampunkIndustrial') },
+    { id: 'ancient', label: t('ancientCivs') },
+    { id: 'vintage20th', label: t('vintageNostalgia') },
   ];
 
   const filteredPosts = posts.filter((p) =>
@@ -69,14 +71,14 @@ export const PersonalizedFeed: React.FC<PersonalizedFeedProps> = ({
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div>
             <h3 className="font-serif font-black text-xl dark:text-stone-100 text-slate-800">
-              Personalized Creative Feed
+              {t('feedTitle')}
             </h3>
             <p className="text-xs text-stone-400 mt-0.5">
-              Curated historical styles, prompt recipes, and transformations shared by the Chronos community.
+              {t('feedSubtitle')}
             </p>
           </div>
           <span className="text-xs font-mono text-amber-500 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
-            Tailored to your creative interests
+            {t('tailoredBadge')}
           </span>
         </div>
 
@@ -151,7 +153,7 @@ export const PersonalizedFeed: React.FC<PersonalizedFeedProps> = ({
                   className="absolute bottom-3 right-3 px-3 py-1.5 rounded-xl bg-stone-950/80 backdrop-blur-md border border-stone-700 text-stone-200 hover:border-amber-400 text-xs font-semibold flex items-center gap-1.5 transition-colors"
                 >
                   <Eye className="w-3.5 h-3.5 text-amber-400" />
-                  {isShowingOriginal ? 'View Historical' : 'Peek Original'}
+                  {isShowingOriginal ? t('viewHistorical') : t('peekOriginal')}
                 </button>
               </div>
 
@@ -160,7 +162,7 @@ export const PersonalizedFeed: React.FC<PersonalizedFeedProps> = ({
                 {post.customPrompt && (
                   <div className="p-2.5 rounded-xl dark:bg-stone-950/50 bg-slate-50 border dark:border-stone-800 border-slate-200 text-xs space-y-1">
                     <span className="text-[10px] font-mono uppercase text-amber-500 font-bold block">
-                      Custom Prompt Recipe:
+                      {t('customPromptRecipe')}
                     </span>
                     <p className="text-stone-300 italic text-[11px] leading-relaxed">
                       "{post.customPrompt}"
@@ -202,7 +204,7 @@ export const PersonalizedFeed: React.FC<PersonalizedFeedProps> = ({
                     className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-400 hover:bg-amber-500 hover:text-stone-950 text-xs font-bold transition-all shadow-sm"
                   >
                     <Sparkles className="w-3.5 h-3.5" />
-                    <span>Try with My Face</span>
+                    <span>{t('tryWithMyFace')}</span>
                   </button>
                 </div>
               </div>

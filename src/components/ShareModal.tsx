@@ -9,6 +9,7 @@ import {
   QrCode,
   Sparkles,
 } from 'lucide-react';
+import { useI18n } from '../context/I18nContext';
 
 interface ShareModalProps {
   isOpen: boolean;
@@ -27,6 +28,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
   eraYear,
   onDownload,
 }) => {
+  const { t } = useI18n();
   const [copied, setCopied] = useState(false);
   const [showQr, setShowQr] = useState(false);
 
@@ -95,7 +97,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
             </div>
             <div>
               <h3 className="font-serif font-bold text-sm dark:text-stone-100 text-slate-800">
-                Share Historical Portrait
+                {t('shareTitle')}
               </h3>
               <p className="text-[11px] text-stone-400">
                 {eraName} • {eraYear}
@@ -133,7 +135,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
           {/* Direct Social Grid */}
           <div className="space-y-2">
             <span className="text-[11px] font-mono uppercase tracking-wider text-stone-400">
-              Share to Platform
+              {t('shareToPlatform')}
             </span>
             <div className="grid grid-cols-4 gap-2">
               <button
@@ -189,7 +191,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
               onClick={handleNativeShare}
               className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-amber-500 text-stone-950 font-bold text-xs hover:bg-amber-400 shadow-md shadow-amber-500/20 transition-all"
             >
-              <Share2 className="w-4 h-4" /> Native Share to Any App (Instagram, TikTok, Messages)
+              <Share2 className="w-4 h-4" /> {t('nativeShareBtn')}
             </button>
 
             <div className="flex gap-2">
@@ -200,11 +202,11 @@ export const ShareModal: React.FC<ShareModalProps> = ({
               >
                 {copied ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-emerald-400" /> Copied Link!
+                    <Check className="w-3.5 h-3.5 text-emerald-400" /> {t('copiedLink')}
                   </>
                 ) : (
                   <>
-                    <Copy className="w-3.5 h-3.5" /> Copy Share Link
+                    <Copy className="w-3.5 h-3.5" /> {t('copyShareLink')}
                   </>
                 )}
               </button>
@@ -214,7 +216,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                 onClick={() => setShowQr(!showQr)}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-xl border dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300 bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200 text-xs font-semibold transition-colors"
               >
-                <QrCode className="w-3.5 h-3.5" /> {showQr ? 'Hide QR' : 'Phone QR'}
+                <QrCode className="w-3.5 h-3.5" /> {showQr ? t('hideQr') : t('phoneQr')}
               </button>
             </div>
 
@@ -234,7 +236,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                   </div>
                 </div>
                 <p className="text-[10px] text-stone-400 font-mono">
-                  Scan with your mobile camera to open & save directly
+                  {t('qrDesc')}
                 </p>
               </div>
             )}

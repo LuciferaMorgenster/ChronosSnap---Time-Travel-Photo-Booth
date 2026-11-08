@@ -19,6 +19,7 @@ import {
   ExternalLink as ExternalLinkIcon,
 } from 'lucide-react';
 import { CreatorProfile, EngagementMetrics, HistoricalEra, Project } from '../types';
+import { useI18n } from '../context/I18nContext';
 
 interface CreatorDashboardProps {
   metrics: EngagementMetrics;
@@ -53,6 +54,7 @@ export const CreatorDashboard: React.FC<CreatorDashboardProps> = ({
   onForceSync,
   onOpenDonation,
 }) => {
+  const { t } = useI18n();
   const [editingTitleId, setEditingTitleId] = useState<string | null>(null);
   const [tempTitle, setTempTitle] = useState('');
   const [filterFavoriteOnly, setFilterFavoriteOnly] = useState(false);
@@ -114,14 +116,14 @@ export const CreatorDashboard: React.FC<CreatorDashboardProps> = ({
                   isSyncing ? 'text-amber-400 animate-spin' : 'text-emerald-400'
                 }`}
               />
-              <span>{isSyncing ? 'Syncing...' : 'All Changes Synced'}</span>
+              <span>{isSyncing ? t('syncing') : t('synced')}</span>
             </button>
             <button
               type="button"
               onClick={onNewProject}
               className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500 text-stone-950 font-bold text-xs hover:bg-amber-400 shadow-md shadow-amber-500/20 transition-all"
             >
-              <Plus className="w-4 h-4" /> New Shoot
+              <Plus className="w-4 h-4" /> {t('newShoot')}
             </button>
           </div>
         </div>
@@ -131,43 +133,43 @@ export const CreatorDashboard: React.FC<CreatorDashboardProps> = ({
           {/* Total Travels */}
           <div className="p-3.5 rounded-xl border dark:border-stone-800 dark:bg-stone-950/40 bg-slate-50 border-slate-200 space-y-1">
             <div className="flex items-center justify-between text-stone-400">
-              <span className="text-[10px] font-mono uppercase">Time Travels</span>
+              <span className="text-[10px] font-mono uppercase">{t('totalTimeTravels')}</span>
               <Clock className="w-3.5 h-3.5 text-amber-500" />
             </div>
             <p className="text-xl font-bold font-mono text-amber-400">
               {projects.length}
             </p>
-            <p className="text-[10px] text-stone-400">Portraits Generated</p>
+            <p className="text-[10px] text-stone-400">{t('portraitsGenerated')}</p>
           </div>
 
           {/* Viral Reach */}
           <div className="p-3.5 rounded-xl border dark:border-stone-800 dark:bg-stone-950/40 bg-slate-50 border-slate-200 space-y-1">
             <div className="flex items-center justify-between text-stone-400">
-              <span className="text-[10px] font-mono uppercase">Viral Reach</span>
+              <span className="text-[10px] font-mono uppercase">{t('viralReach')}</span>
               <TrendingUp className="w-3.5 h-3.5 text-purple-400" />
             </div>
             <p className="text-xl font-bold font-mono text-purple-400">
               {(metrics.viralReach / 1000).toFixed(1)}k
             </p>
-            <p className="text-[10px] text-stone-400">Estimated Views</p>
+            <p className="text-[10px] text-stone-400">{t('estimatedViews')}</p>
           </div>
 
           {/* Social Shares */}
           <div className="p-3.5 rounded-xl border dark:border-stone-800 dark:bg-stone-950/40 bg-slate-50 border-slate-200 space-y-1">
             <div className="flex items-center justify-between text-stone-400">
-              <span className="text-[10px] font-mono uppercase">Shares</span>
+              <span className="text-[10px] font-mono uppercase">{t('shares')}</span>
               <Share2 className="w-3.5 h-3.5 text-blue-400" />
             </div>
             <p className="text-xl font-bold font-mono text-blue-400">
               {metrics.totalShares + projects.reduce((acc, p) => acc + (p.sharesCount || 0), 0)}
             </p>
-            <p className="text-[10px] text-stone-400">Social Outlets</p>
+            <p className="text-[10px] text-stone-400">{t('socialOutlets')}</p>
           </div>
 
           {/* High-Res Downloads */}
           <div className="p-3.5 rounded-xl border dark:border-stone-800 dark:bg-stone-950/40 bg-slate-50 border-slate-200 space-y-1">
             <div className="flex items-center justify-between text-stone-400">
-              <span className="text-[10px] font-mono uppercase">Downloads</span>
+              <span className="text-[10px] font-mono uppercase">{t('downloads')}</span>
               <Download className="w-3.5 h-3.5 text-emerald-400" />
             </div>
             <p className="text-xl font-bold font-mono text-emerald-400">
@@ -180,25 +182,25 @@ export const CreatorDashboard: React.FC<CreatorDashboardProps> = ({
           {/* Temporal Core Flux */}
           <div className="p-3.5 rounded-xl border dark:border-stone-800 dark:bg-stone-950/40 bg-slate-50 border-slate-200 space-y-1">
             <div className="flex items-center justify-between text-stone-400">
-              <span className="text-[10px] font-mono uppercase">Chrono Flux</span>
+              <span className="text-[10px] font-mono uppercase">{t('chronoFlux')}</span>
               <Zap className="w-3.5 h-3.5 text-yellow-400" />
             </div>
             <p className="text-xl font-bold font-mono text-yellow-400">
               {metrics.temporalFluxLevel}%
             </p>
-            <p className="text-[10px] text-stone-400">Core Power Active</p>
+            <p className="text-[10px] text-stone-400">{t('corePowerActive')}</p>
           </div>
 
           {/* Era Mastery */}
           <div className="p-3.5 rounded-xl border dark:border-stone-800 dark:bg-stone-950/40 bg-slate-50 border-slate-200 space-y-1">
             <div className="flex items-center justify-between text-stone-400">
-              <span className="text-[10px] font-mono uppercase">Timeline</span>
+              <span className="text-[10px] font-mono uppercase">{t('timeline')}</span>
               <Award className="w-3.5 h-3.5 text-pink-400" />
             </div>
             <p className="text-xl font-bold font-mono text-pink-400">
               {unlockedCount} / {eras.length}
             </p>
-            <p className="text-[10px] text-stone-400">Epochs Unlocked</p>
+            <p className="text-[10px] text-stone-400">{t('epochsUnlocked')}</p>
           </div>
         </div>
       </div>
@@ -211,10 +213,10 @@ export const CreatorDashboard: React.FC<CreatorDashboardProps> = ({
           </div>
           <div>
             <h4 className="font-serif font-bold text-sm dark:text-stone-100 text-slate-800">
-              Vind je ChronosSnap geweldig? Steun het project!
+              {t('supportBannerTitle')}
             </h4>
             <p className="text-xs text-stone-400">
-              Donaties helpen ons servercapaciteit voor Gemini 4 Argon en Nano Banana 2.1 te behouden. PayPal: <strong className="text-amber-400 font-mono">luciferamorgenster@gmail.com</strong>
+              {t('supportBannerDesc')} <strong className="text-amber-400 font-mono">luciferamorgenster@gmail.com</strong>
             </p>
           </div>
         </div>
@@ -224,7 +226,7 @@ export const CreatorDashboard: React.FC<CreatorDashboardProps> = ({
           className="w-full sm:w-auto px-4 py-2 rounded-xl bg-gradient-to-r from-rose-500 to-amber-500 text-white font-bold text-xs hover:brightness-110 shadow-md transition-all shrink-0 flex items-center justify-center gap-1.5"
         >
           <Heart className="w-3.5 h-3.5 fill-current" />
-          <span>Ondersteun via PayPal</span>
+          <span>{t('supportViaPaypal')}</span>
         </button>
       </div>
 
@@ -237,10 +239,10 @@ export const CreatorDashboard: React.FC<CreatorDashboardProps> = ({
             </div>
             <div>
               <h4 className="font-serif font-bold text-base dark:text-stone-100 text-slate-800">
-                Active Projects & Gallery ({displayedProjects.length})
+                {t('activeProjectsGallery')} ({displayedProjects.length})
               </h4>
               <p className="text-[11px] text-stone-400">
-                Switch between active shoots, manage resolutions, and resume editing in darkroom.
+                {t('activeProjectsSubtitle')}
               </p>
             </div>
           </div>
@@ -255,7 +257,7 @@ export const CreatorDashboard: React.FC<CreatorDashboardProps> = ({
                   : 'dark:border-stone-800 dark:text-stone-300 bg-slate-100 border-slate-200 text-slate-700'
               }`}
             >
-              <Star className="w-3.5 h-3.5" /> Favorites Only
+              <Star className="w-3.5 h-3.5" /> {t('favoritesOnly')}
             </button>
           </div>
         </div>
@@ -371,7 +373,7 @@ export const CreatorDashboard: React.FC<CreatorDashboardProps> = ({
                         }}
                         className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-500 text-stone-950 hover:bg-amber-400 transition-colors"
                       >
-                        Edit
+                        {t('edit')}
                       </button>
                       <button
                         type="button"
